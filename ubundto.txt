@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    int pipefd[2];
+    pid_t child_pid;
+    pid_t parent_pid = getpid();
+
+    if (pipe(pipefd) == -1) {
+        perror("Pipe creation failed");
+        return 1;
+    }
+
+    child_pid = fork();
+
+    if (child_pid == -1) {
+        perror("Fork failed");
+        return 1;
+    }
+
+    if (child_pid == 0) {
+        // Child process
+        pid_t child_process_id = getpid();
+        close(pipefd[0]); // Close the unused read end of the pipe
+        write(pipefd[1], &child_process_id, sizeof(child_process_id)); // Write child process ID to the pipe
+        close(pipefd[1]); // Close the write end of the pipe
+        return 0;
+    } else {
+        // Parent process
+        pid_t child_process_id;
+        close(pipefd[1]); // Close the unused write end of the pipe
+        read(pipefd[0], &child_process_id, sizeof(child_process_id)); // Read child process ID from the pipe
+        close(pipefd[0]); // Close the read end of the pipe
+      
+        printf("JUNAID MALIK \n");
+       printf("0304-1659294 \n");
+        printf("parent (pid:%d): Received child process ID %d\n", parent_pid, child_process_id);
+        printf("parent (pid:%d): Parent process ID %d\n", parent_pid, parent_pid);
+        return 0;
+    }
+}
