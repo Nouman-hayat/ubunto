@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h
+#include <sys/stat.h>  
+#include <sys/types.h>
+#include <unistd.h>
+
+ #define FIFO FILE "/tmp/fifo"
+
+ int main()
+ {
+
+int fdd;
+
+char message[] = "Hello fran writer program";
+
+ // Create the FIFO  
+nkfLfo(FIFO FILE, 0666);
+
+ //  openwrite-only Mode 
+fd=open(FIFO FILE, O_WRONLY);
+
+//Write the message 
+write(fdd, nessage, sizeof(message));
+
+// Close the FIFO
+ close(fdd);
+
+return 0;
+}

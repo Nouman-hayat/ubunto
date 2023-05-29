@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h
+#include <sys/stat.h>  
+#include <sys/types.h>
+#include <unistd.h>
+
+ #define FIFO FILE "/tmp/fifo"
+
+ int main()
+ {
+
+int fdd;
+
+char message[90] ;
+
+
+
+ //  openwrite-only Mode 
+fd=open(FIFO FILE, O_RDONLY);
+
+//Write the message 
+write(fdd, nessage, sizeof(message));
+
+// Close the FIFO
+ close(fdd);
+
+printf("Message received : %s\n", message);
+
+return 0;
+}
